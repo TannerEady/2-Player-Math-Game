@@ -46,7 +46,7 @@ end
 def get_names
   print "Player 1, what is your name? "
   @player_1_name = gets.chomp
-  print"Player 2, what is your name? "
+  print "Player 2, what is your name? "
   @player_2_name = gets.chomp
 end
 
@@ -134,9 +134,9 @@ def new_turn(player)
   puts generate_question(num1, num2, player, operation)
   player_input = get_answer
   if correct_answer?(num1, num2, player_input,operation)
-    print answer_is_correct
+    puts answer_is_correct
   else
-    print answer_is_incorrect
+    puts answer_is_incorrect
     lose_life(player)
   end
   game_status(player_lives(player), player)
