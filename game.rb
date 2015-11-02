@@ -4,41 +4,29 @@ require 'colorize'
 class Game
 
   def run
-    print "Player 1, what is your name? "
-      name1 = gets.chomp
-    print "Player 2, what is your name? "
-      name2 = gets.chomp
-    @player_1 = Player.new(name1)
-    @player_2 = Player.new(name2)
-    @current_player = @player_1
+    get_player_names
 
     begin
       generate_question
       switch_players
     end while !@player_1.lost_game? && !@player_2.lost_game?
-    
-    if @player_1.lost_game?
-      puts "#{@player_1.name} has lost. #{@player_2.name} is the winner!"
-    else
-      puts "#{@player_2.name} has lost. #{@player_1.name} is the winner!"
-    end
+  
+    has_lost_game?
     puts "GAME OVER."
+  end
+
+  def get_player_names
+    print "Player 1, what is your name? "
+    name1 = gets.chomp
+    print "Player 2, what is your name? "
+    name2 = gets.chomp
+    @player_1 = Player.new(name1)
+    @player_2 = Player.new(name2)
+    @current_player = @player_1
   end
 
   def random_number
     rand(1..20)
-  end
-
-  def add(a, b)
-    a + b
-  end
-
-  def subtract(a, b)
-    a - b
-  end
-
-  def multiply(a, b)
-    a * b
   end
 
   def random_op
@@ -64,12 +52,9 @@ class Game
 
   def verify_answer(num1, num2, operation, answer)
     case operation
-      when 'plus'
-        result = add(num1, num2)
-      when 'minus'
-        result = subtract(num1, num2)
-      when 'times'
-        result = multiply(num1, num2)
+      when 'plus' then result = num1 + num2
+      when 'minus' then result = num1 - num2
+      when 'times' then result = num1 * num2
       end
     if result == answer
       puts 'Correct! Congratulations, you can do elementary math!'.colorize(:green)
@@ -84,6 +69,14 @@ class Game
     @current_player = case @current_player
       when @player_1 then @player_2
       when @player_2 then @player_1
+    end
+  end
+
+  def has_lost_game?
+    if @player_1.lost_game?
+      puts "#{@player_1.name} has lost. #{@player_2.name} is the winner!"
+    else
+      puts "#{@player_2.name} has lost. #{@player_1.name} is the winner!"
     end
   end
   
